@@ -1,3 +1,4 @@
-import { AuthService, UserType } from "./AuthService";
+import { AuthService, UserType, IUser, authServiceInstance } from "./AuthService";
 
-export { AuthService, UserType };
+export { AuthService, UserType, authServiceInstance };
+export type { IUser };

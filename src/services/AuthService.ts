@@ -15,6 +15,7 @@ export enum UserType {
 }
 
 export interface IUser {
+    id: number,
     token: string,
     name: string,
     code: string,
@@ -104,3 +105,4 @@ class AuthService {
 }
 
 export { AuthService };
+export const authServiceInstance = new AuthService();

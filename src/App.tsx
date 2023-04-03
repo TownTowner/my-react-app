@@ -5,11 +5,15 @@ import './App.css';
 // import { styled } from '@mui/material/styles';
 // import Paper from '@mui/material/Paper';
 import { Link, Route, Router } from 'react-router-dom';
-import { AuthService } from './services';
-import { HotelBar, HomePage, LoginPage, PrivateRoute } from './components';
+import { authServiceInstance } from './services';
+import { HotelBar, LoginPage, PrivateRoute, ReservationPage } from './components';
 
 import { createBrowserHistory } from 'history';
-export const history = createBrowserHistory();
+
+export const history = createBrowserHistory({
+  forceRefresh: true
+});
+
 
 class App extends React.Component<any, { currentUser: string }> {
 
@@ -19,7 +23,7 @@ class App extends React.Component<any, { currentUser: string }> {
   }
 
   componentDidMount() {
-    AuthService.prototype.currentUser?.subscribe((x: any) => {
+    authServiceInstance.currentUser?.subscribe((x: any) => {
       console.log('didmount auth subscribe', x);
       this.setState({ currentUser: x ? JSON.stringify(x) : '' }, () => this.forceUpdate());
     });
@@ -41,7 +45,7 @@ class App extends React.Component<any, { currentUser: string }> {
   // }
 
   logout() {
-    AuthService.prototype.logout();
+    authServiceInstance.logout();
     history.push('/login');
   }
 
@@ -65,9 +69,7 @@ class App extends React.Component<any, { currentUser: string }> {
             <div className="container">
               <div className="row">
                 <div className="col-md-6 offset-md-3">
-                  <div>//{currentUser}--{currentUser === ''}~~{currentUser}//</div>
-                  {/* <Route exact path="/" component={Root} /> */}
-                  <PrivateRoute exact path="/" component={HomePage} />
+                  <PrivateRoute exact path="/" component={ReservationPage} />
                   <Route path="/login" component={LoginPage} />
                   {/* render={(props) => <LoginPage whenLogin={(callback) => this.detachUser(callback)} {...props} />} */}
                 </div>

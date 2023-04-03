@@ -10,14 +10,16 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { AuthService, UserType } from '../services/AuthService';
+import AdbIcon from '@mui/icons-material/Adb';
+import { authServiceInstance, UserType } from '../services/AuthService';
+import { ReservationPage } from './Reservation';
 
 function HotelBar() {
-    const user = AuthService.prototype.currentUserValue;
+    const user = authServiceInstance.currentUserValue;
 
     const pages = ['Reservation'];
     if (user && user.userType === UserType.Employee) {
-        pages.push('Users', 'Tables');
+        pages.push('User', 'Table');
     }
     const settings = ['Profile', 'Logout'];
 
@@ -27,6 +29,7 @@ function HotelBar() {
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
+
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
@@ -43,6 +46,7 @@ function HotelBar() {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
+                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography
                         variant="h6"
                         noWrap
@@ -86,8 +90,7 @@ function HotelBar() {
                             onClose={handleCloseNavMenu}
                             sx={{
                                 display: { xs: 'block', md: 'none' },
-                            }}
-                        >
+                            }}>
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">{page}</Typography>
@@ -95,6 +98,8 @@ function HotelBar() {
                             ))}
                         </Menu>
                     </Box>
+
+                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
                     <Typography
                         variant="h5"
                         noWrap
@@ -111,7 +116,7 @@ function HotelBar() {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        HILTON
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (

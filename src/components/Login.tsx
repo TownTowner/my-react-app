@@ -1,6 +1,6 @@
 import React, { FormEvent } from 'react';
 
-import { AuthService } from '../services';
+import { authServiceInstance } from '../services';
 import { Link } from 'react-router-dom';
 import { TextField, Stack, Button, Alert } from '@mui/material';
 
@@ -17,7 +17,7 @@ class LoginPage extends React.Component<any, ILoginState> {
         super(props);
 
         // redirect to home if already logged in
-        if (AuthService.prototype.currentUserValue) {
+        if (authServiceInstance.currentUserValue) {
             this.props.history.push('/');
         }
         this.state = { email: '', password: '', emailError: false, passwordError: false, msg: '' };
@@ -26,15 +26,15 @@ class LoginPage extends React.Component<any, ILoginState> {
     submit = ({ email, password }, action: string) => {
         // setStatus && setStatus();
         var pro = action === 'login' ?
-            AuthService.prototype.login(email, password) :
-            AuthService.prototype.register(email, password);
+            authServiceInstance.login(email, password) :
+            authServiceInstance.register(email, password);
 
         pro.then(
             user => {
                 if (action === 'login') {
                     const { from } = this.props.location.state || { from: { pathname: "/" } };
                     this.props.history.push(from);
-                    console.log('login from,',from)
+                    console.log('login from,', from)
                     // this.props.whenLogin(() => {
                     //     console.log('dididi');
                     // });

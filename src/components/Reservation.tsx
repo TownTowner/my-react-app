@@ -1,32 +1,32 @@
 import React from 'react';
 
-import { AuthService } from '../services';
+import { authServiceInstance, IUser } from '../services';
 
-class HomePage extends React.Component {
-    state = {
-        currentUser: AuthService.prototype.currentUserValue,
-        users: null
-    };
+class ReservationPage extends React.Component<any, { currentUser: IUser, reservations: any[] }> {
 
     constructor(props) {
         super(props);
+        this.state = {
+            currentUser: authServiceInstance.currentUserValue,
+            reservations: null
+        };
     }
 
     componentDidMount() {
-        console.log('didmount');
+        console.log('ReservationPage didmount');
         // userService.getAll().then(users => this.setState({ users }));
     }
 
     render() {
-        const { currentUser, users } = this.state;
+        const reservations = this.state.reservations;
         return (
             <div>
-                <h1>Hi {currentUser?.name}!</h1>
+                <h1>Hi {this.state.currentUser?.name}!</h1>
                 <p>You're logged in with React & JWT!!</p>
                 <h3>Users from secure api end point:</h3>
-                {users &&
+                {reservations &&
                     <ul>
-                        {users.map(user =>
+                        {reservations.map(user =>
                             <li key={user.id}>{user.firstName} {user.lastName}</li>
                         )}
                     </ul>
@@ -36,4 +36,4 @@ class HomePage extends React.Component {
     }
 }
 
-export { HomePage };
+export { ReservationPage };
