@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { authServiceInstance, IUser } from '../services';
+import { authServiceInstance, IUser, reservationServiceInstance } from '../services';
 
 class ReservationPage extends React.Component<any, { currentUser: IUser, reservations: any[] }> {
 
@@ -13,8 +13,8 @@ class ReservationPage extends React.Component<any, { currentUser: IUser, reserva
     }
 
     componentDidMount() {
+        reservationServiceInstance.getAll().then(reservations => this.setState({ reservations }));
         console.log('ReservationPage didmount');
-        // userService.getAll().then(users => this.setState({ users }));
     }
 
     render() {
@@ -22,12 +22,11 @@ class ReservationPage extends React.Component<any, { currentUser: IUser, reserva
         return (
             <div>
                 <h1>Hi {this.state.currentUser?.name}!</h1>
-                <p>You're logged in with React & JWT!!</p>
-                <h3>Users from secure api end point:</h3>
+                <h3>Here are your reservations:</h3>
                 {reservations &&
                     <ul>
-                        {reservations.map(user =>
-                            <li key={user.id}>{user.firstName} {user.lastName}</li>
+                        {reservations.map(r =>
+                            <li key={r.id}>{r.guestId}-{r.tableId}-{r.reservationTime}</li>
                         )}
                     </ul>
                 }

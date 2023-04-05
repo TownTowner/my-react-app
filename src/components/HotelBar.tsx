@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { authServiceInstance, UserType } from '../services/AuthService';
 import { ReservationPage } from './Reservation';
+import { history } from '../App';
 
 function HotelBar() {
     const user = authServiceInstance.currentUserValue;
@@ -40,6 +41,12 @@ function HotelBar() {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const handleData = (page: string) => {
+        handleCloseNavMenu();
+        handleCloseUserMenu();
+        history.push(page.toLowerCase());
     };
 
     return (
@@ -122,9 +129,8 @@ function HotelBar() {
                         {pages.map((page) => (
                             <Button
                                 key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
+                                onClick={()=>handleData(page)}
+                                sx={{ my: 2, color: 'white', display: 'block' }}>
                                 {page}
                             </Button>
                         ))}

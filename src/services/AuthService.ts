@@ -37,16 +37,13 @@ class AuthService {
             body: JSON.stringify({ email, password })
         };
 
-        return Promise.resolve({ email: 'fff', token: 'fff' })
-            // return fetch(`${(config as any).apiUrl}/Account/Login`, requestOptions)
-            //     .then(this.handleResponse)
+        // return Promise.resolve({ email: 'fff', token: 'fff' })
+        return fetch(`${(config as any).apiUrl}/Account/Login`, requestOptions)
+            .then((res) => this.handleResponse(res))
             .then((user: IUser) => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('currentUser', JSON.stringify(user));
-                console.log('login', this.currentUserValue);
                 currentUserSubject.next(user);
-                console.log('login', this.currentUserValue);
-
                 return user;
             });
     }
@@ -62,7 +59,7 @@ class AuthService {
         };
 
         return fetch(`${(config as any).apiUrl}/Account/Register`, requestOptions)
-            .then(this.handleResponse)
+            .then((res) => this.handleResponse(res))
             .then(user => {
                 currentUserSubject.next(user);
                 return user;
@@ -102,6 +99,7 @@ class AuthService {
             return data;
         });
     }
+
 }
 
 export { AuthService };

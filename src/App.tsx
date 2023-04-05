@@ -1,10 +1,6 @@
 import React from 'react';
-// import logo from './logo.svg';
 import './App.css';
-// import { Grid } from '@mui/material';
-// import { styled } from '@mui/material/styles';
-// import Paper from '@mui/material/Paper';
-import { Link, Route, Router } from 'react-router-dom';
+import { Route, Router, Switch } from 'react-router-dom';
 import { authServiceInstance } from './services';
 import { HotelBar, LoginPage, PrivateRoute, ReservationPage } from './components';
 
@@ -27,22 +23,11 @@ class App extends React.Component<any, { currentUser: string }> {
       console.log('didmount auth subscribe', x);
       this.setState({ currentUser: x ? JSON.stringify(x) : '' }, () => this.forceUpdate());
     });
-    // setTimeout(() => {
-    //   console.log('didmount setTimeout');
-    //   // this.setState({ currentUser: 'sss' });
-    //   AuthService.prototype.login('', '');
-    // }, 2000);
   }
 
   componentWillUnmount(): void {
     // this.logout();
   }
-
-  // detachUser(callback?: Function) {
-  //   var u = AuthService.prototype.currentUserValue;
-  //   console.log('detach,', u);
-  //   this.setState({ 'currentUser': u ? JSON.stringify(u) : u }, () => callback && callback());
-  // }
 
   logout() {
     authServiceInstance.logout();
@@ -69,9 +54,11 @@ class App extends React.Component<any, { currentUser: string }> {
             <div className="container">
               <div className="row">
                 <div className="col-md-6 offset-md-3">
-                  <PrivateRoute exact path="/" component={ReservationPage} />
-                  <Route path="/login" component={LoginPage} />
-                  {/* render={(props) => <LoginPage whenLogin={(callback) => this.detachUser(callback)} {...props} />} */}
+                  <Switch>
+                    <PrivateRoute exact path="/" component={ReservationPage} />
+                    <Route path="/login" component={LoginPage} />
+                    <Route path="/reservation" component={ReservationPage} />
+                  </Switch>
                 </div>
               </div>
             </div>
