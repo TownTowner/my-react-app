@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { authServiceInstance, IUser, reservationServiceInstance } from '../services';
+import ImgMediaCard from '../utils/ImgMediaCard';
 
 class ReservationPage extends React.Component<any, { currentUser: IUser, reservations: any[] }> {
 
@@ -21,14 +22,12 @@ class ReservationPage extends React.Component<any, { currentUser: IUser, reserva
         const reservations = this.state.reservations;
         return (
             <div>
-                <h1>Hi {this.state.currentUser?.name}!</h1>
-                <h3>Here are your reservations:</h3>
+                {!reservations && <h3>No andy reservations here.</h3>}
                 {reservations &&
-                    <ul>
-                        {reservations.map(r =>
-                            <li key={r.id}>{r.guestId}-{r.tableId}-{r.reservationTime}</li>
-                        )}
-                    </ul>
+                    reservations.map(r =>
+                        // <li key={r.id}>{r.guestId}-{r.tableId}-{r.reservationTime}</li>
+                        <ImgMediaCard key={r.id} />
+                    )
                 }
             </div>
         );
