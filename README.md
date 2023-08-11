@@ -1,3 +1,10 @@
+# Hotel reservation system
+## CI Build Status
+
+| Platform | Build Server | Master Status  |
+|--------- |------------- |---------|
+| AppVeyor |  Windows/Linux |[![Build status](https://ci.appveyor.com/api/projects/status/pml2fotjto3rresd?svg=true)](https://ci.appveyor.com/project/TownTowner/my-react-app2)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
