@@ -1,5 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
-import config from 'config';
+// import config from 'configData';
+
+const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const currentUserSubject = new BehaviorSubject<IUser>(JSON.parse(localStorage.getItem('currentUser')));
 
@@ -38,7 +40,8 @@ class AuthService {
         };
 
         // return Promise.resolve({ email: 'fff', token: 'fff' })
-        return fetch(`${(config as any).apiUrl}/Account/Login`, requestOptions)
+        // return fetch(`${(config as any).apiUrl}/Account/Login`, requestOptions)
+        return fetch(`${SERVER_URL}/Account/Login`, requestOptions)
             .then((res) => this.handleResponse(res))
             .then((user: IUser) => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -58,7 +61,8 @@ class AuthService {
             body: JSON.stringify({ email, password })
         };
 
-        return fetch(`${(config as any).apiUrl}/Account/Register`, requestOptions)
+        // return fetch(`${(config as any).apiUrl}/Account/Register`, requestOptions)
+        return fetch(`${SERVER_URL}/Account/Register`, requestOptions)
             .then((res) => this.handleResponse(res))
             .then(user => {
                 currentUserSubject.next(user);

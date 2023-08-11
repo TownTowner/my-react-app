@@ -50,7 +50,8 @@ class App extends React.Component<any, { currentUser: string }> {
             // </nav>
           }
 
-          <div className="jumbotron">
+          {/* testid for test */}
+          <div className="jumbotron" data-testid="jumbotron">
             <div className="container">
               <div className="row">
                 <div className="col-md-6 offset-md-3">
