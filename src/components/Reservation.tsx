@@ -22,7 +22,7 @@ class ReservationPage extends React.Component<any, { currentUser: IUser, reserva
         const reservations = this.state.reservations;
         return (
             <div>
-                {!reservations && <h3>No andy reservations here.</h3>}
+                {!reservations && <h3>No any reservations here.</h3>}
                 {reservations &&
                     reservations.map(r =>
                         // <li key={r.id}>{r.guestId}-{r.tableId}-{r.reservationTime}</li>

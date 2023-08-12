@@ -1,15 +1,22 @@
 import React from 'react';
 import './App.css';
-import { Route, Router, Switch } from 'react-router-dom';
+// ?: you should ensure that ths history stack are the same with react using when you want use HistoryRouter
+// ?now we use useNavigate
+import {
+  Route, Router, Routes,
+  useNavigate, BrowserRouter,
+  unstable_HistoryRouter as HistoryRouter
+} from 'react-router-dom';
 import { authServiceInstance } from './services';
 import { HotelBar, LoginPage, PrivateRoute, ReservationPage } from './components';
 
 import { createBrowserHistory } from 'history';
+import AuthRoute from './components/PrivateRoute';
 
-export const history = createBrowserHistory({
-  forceRefresh: true
-});
 
+// export const history = createBrowserHistory({
+//   forceRefresh: true
+// });
 
 class App extends React.Component<any, { currentUser: string }> {
 
@@ -25,21 +32,13 @@ class App extends React.Component<any, { currentUser: string }> {
     });
   }
 
-  componentWillUnmount(): void {
-    // this.logout();
-  }
-
-  logout() {
-    authServiceInstance.logout();
-    history.push('/login');
-  }
-
   render() {
     const { currentUser } = this.state;
     console.log('render,', currentUser);
 
     return (
-      <Router history={history}>
+      // <HistoryRouter history={history}>
+      <BrowserRouter>
         <div>
           {currentUser && <HotelBar />
             // <nav className="navbar navbar-expand navbar-dark bg-dark">
@@ -55,17 +54,24 @@ class App extends React.Component<any, { currentUser: string }> {
             <div className="container">
               <div className="row">
                 <div className="col-md-6 offset-md-3">
-                  <Switch>
-                    <PrivateRoute exact path="/" component={ReservationPage} />
-                    <Route path="/login" component={LoginPage} />
-                    <Route path="/reservation" component={ReservationPage} />
-                  </Switch>
+                  <Routes>
+                    {/* <PrivateRoute exact path="/" component={ReservationPage} /> */}
+                    <Route
+                      path='/'
+                      element={
+                        <AuthRoute>
+                          {<ReservationPage />}
+                        </AuthRoute>
+                      }
+                    />
+                    <Route path="/login" Component={LoginPage} />
+                  </Routes>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </Router>
+      </BrowserRouter>
     );
   }
 }

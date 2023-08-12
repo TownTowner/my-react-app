@@ -12,17 +12,20 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { authServiceInstance, UserType } from '../services/AuthService';
-import { ReservationPage } from './Reservation';
-import { history } from '../App';
+// import { history } from '../App';
+import { useNavigate } from 'react-router-dom';
 
 function HotelBar() {
+    const navigate = useNavigate();
+
     const user = authServiceInstance.currentUserValue;
 
     const pages = ['Reservation'];
     if (user && user.userType === UserType.Employee) {
         pages.push('User', 'Table');
     }
-    const settings = ['Profile', 'Logout'];
+    const settings = [{ path: 'Profile', onClick: () => navigate('/profile') },
+    { path: 'Logout', onClick: () => handleLogout() }];
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -46,7 +49,15 @@ function HotelBar() {
     const handleData = (page: string) => {
         handleCloseNavMenu();
         handleCloseUserMenu();
-        history.push(page.toLowerCase());
+        // history.push(page.toLowerCase());
+        navigate(page.toLowerCase(), { replace: true });
+    };
+
+    const handleLogout = () => {
+        handleCloseNavMenu();
+        handleCloseUserMenu();
+        authServiceInstance.logout();
+        navigate('/login', { replace: true });
     };
 
     return (
@@ -129,7 +140,7 @@ function HotelBar() {
                         {pages.map((page) => (
                             <Button
                                 key={page}
-                                onClick={()=>handleData(page)}
+                                onClick={() => handleData(page)}
                                 sx={{ my: 2, color: 'white', display: 'block' }}>
                                 {page}
                             </Button>
@@ -159,8 +170,8 @@ function HotelBar() {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
+                                <MenuItem key={setting.path} onClick={setting.onClick}>
+                                    <Typography textAlign="center">{setting.path}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>

@@ -39,9 +39,14 @@ class AuthService {
             body: JSON.stringify({ email, password })
         };
 
-        // return Promise.resolve({ email: 'fff', token: 'fff' })
-        // return fetch(`${(config as any).apiUrl}/Account/Login`, requestOptions)
-        return fetch(`${SERVER_URL}/Account/Login`, requestOptions)
+        return Promise.resolve(new Response(JSON.stringify({ email: 'fff', token: 'fff' }), {
+            status: 200,
+            headers: {
+                "Content-Type": "application/json; utf-8",
+            },
+        }))
+            // ?old return fetch(`${(config as any).apiUrl}/Account/Login`, requestOptions)
+            // return fetch(`${SERVER_URL}/Account/Login`, requestOptions)
             .then((res) => this.handleResponse(res))
             .then((user: IUser) => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes

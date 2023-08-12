@@ -1,5 +1,5 @@
 import HotelBar from "./HotelBar";
-import { LoginPage } from "./Login";
+import LoginPage from "./Login";
 import { PrivateRoute } from "./PrivateRoute";
 import { RegisterPage } from "./Register";
 import { ReservationPage } from "./Reservation";

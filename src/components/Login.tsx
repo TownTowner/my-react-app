@@ -3,6 +3,7 @@ import React, { FormEvent } from 'react';
 import { authServiceInstance } from '../services';
 import { Link } from 'react-router-dom';
 import { TextField, Stack, Button, Alert } from '@mui/material';
+import withRouter from '../services/withRouter';
 
 interface ILoginState {
     email?: string;
@@ -11,14 +12,17 @@ interface ILoginState {
     passwordError: boolean;
     msg?: string;
 }
-class LoginPage extends React.Component<any, ILoginState> {
+
+class LoginPage extends React.Component<{ router: { location, navigate, params }, [key: string]: any }, ILoginState> {
+    // function LoginPage (props:{ router: { location, navigate, params }, [key: string]: any }): ILoginState {
 
     constructor(props) {
         super(props);
 
         // redirect to home if already logged in
         if (authServiceInstance.currentUserValue) {
-            this.props.history.push('/');
+            const { from } = this.props.router.location.state || { from: { pathname: "/" } };
+            this.props.router.navigate(from.pathname || '/', { replace: true });
         }
         this.state = { email: '', password: '', emailError: false, passwordError: false, msg: '' };
     }
@@ -32,8 +36,8 @@ class LoginPage extends React.Component<any, ILoginState> {
         pro.then(
             user => {
                 if (action === 'login') {
-                    const { from } = this.props.location.state || { from: { pathname: "/" } };
-                    this.props.history.push(from);
+                    const { from } = this.props.router.location.state || { from: { pathname: "/" } };
+                    this.props.router.navigate(from.pathname || '/', { replace: true });
                     console.log('login from,', from)
                     // this.props.whenLogin(() => {
                     //     console.log('dididi');
@@ -115,111 +119,9 @@ class LoginPage extends React.Component<any, ILoginState> {
                     </form>
                     <small>Need an account? <Link to="/Register">Register here</Link></small>
                 </React.Fragment>
-
-                {/* <Formik
-                    initialValues={{
-                        email: '',
-                        password: ''
-                    }}
-                    validationSchema={Yup.object().shape({
-                        username: Yup.string().required('Username is required'),
-                        password: Yup.string().required('Password is required')
-                    })}
-                    onSubmit={this.submit}
-                    render={({ errors, status, touched, isSubmitting }) => (
-                        <Form>
-                            <div className="form-group">
-                                <label htmlFor="email">email</label>
-                                <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
-                                <ErrorMessage name="email" component="div" className="invalid-feedback" />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="password">Password</label>
-                                <Field name="password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
-                                <ErrorMessage name="password" component="div" className="invalid-feedback" />
-                            </div>
-                            <div className="form-group">
-                                <button type="submit" className="btn btn-primary" disabled={isSubmitting}>Login</button>
-                                {isSubmitting &&
-                                    <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                                }
-                            </div>
-                            {status &&
-                                <div className={'alert alert-danger'}>{status}</div>
-                            }
-                        </Form>
-                    )}
-                /> */}
             </div>
         )
     }
 }
 
-export { LoginPage };
-
-
-/*import React, {FormEvent, useState} from "react";
-import { TextField, FormControl, Button } from "@mui/material";
-import { Link } from "react-router-dom"
- 
-const Login = () => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [emailError, setEmailError] = useState(false)
-    const [passwordError, setPasswordError] = useState(false)
- 
-    const handleSubmit = (event:FormEvent) => {
-        event.preventDefault()
- 
-        setEmailError(false)
-        setPasswordError(false)
- 
-        if (email == '') {
-            setEmailError(true)
-        }
-        if (password == '') {
-            setPasswordError(true)
-        }
- 
-        if (email && password) {
-            console.log(email, password)
-        }
-    }
-     
-    return ( 
-        <React.Fragment>
-        <form autoComplete="off" onSubmit={handleSubmit}>
-            <h2>Login Form</h2>
-                <TextField 
-                    label="Email"
-                    onChange={e => setEmail(e.target.value)}
-                    required
-                    variant="outlined"
-                    color="secondary"
-                    type="email"
-                    sx={{mb: 3}}
-                    fullWidth
-                    value={email}
-                    error={emailError}
-                 />
-                 <TextField 
-                    label="Password"
-                    onChange={e => setPassword(e.target.value)}
-                    required
-                    variant="outlined"
-                    color="secondary"
-                    type="password"
-                    value={password}
-                    error={passwordError}
-                    fullWidth
-                    sx={{mb: 3}}
-                 />
-                 <Button variant="outlined" color="secondary" type="submit">Login</Button>
-             
-        </form>
-        <small>Need an account? <Link to="/">Register here</Link></small>
-        </React.Fragment>
-     );
-}
- 
-export default Login;*/
+export default withRouter(LoginPage);
