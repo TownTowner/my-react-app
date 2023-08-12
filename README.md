@@ -3,7 +3,8 @@
 
 | Platform | Build Server | Master Status  |
 |--------- |------------- |---------|
-| AppVeyor |  Windows/Linux |[![Build status](https://ci.appveyor.com/api/projects/status/pml2fotjto3rresd?svg=true)](https://ci.appveyor.com/project/TownTowner/my-react-app2)
+| AppVeyor |  Linux |[![Build status](https://ci.appveyor.com/api/projects/status/pml2fotjto3rresd?svg=true)](https://ci.appveyor.com/project/TownTowner/my-react-app2)
+| Coveralls |  Linux |[![Coverage Status](https://coveralls.io/repos/github/TownTowner/my-react-app/badge.svg?branch=master)](https://coveralls.io/github/TownTowner/my-react-app?branch=master)
 
 # Getting Started with Create React App
 
