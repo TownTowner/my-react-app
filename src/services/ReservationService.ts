@@ -8,7 +8,7 @@ class ReservationService {
 
     getAll(): Promise<Reservation[]> {
         // return httpServiceInstance.get(`${(config as any).apiUrl}/User/Reservations`);
-        return httpServiceInstance.get(`${SERVER_URL}/User/Reservations`);
+        return httpServiceInstance.get(`${SERVER_URL}/User/Reservations`).then(res => res.data);
     }
 
 }

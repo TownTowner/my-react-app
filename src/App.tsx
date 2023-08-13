@@ -15,6 +15,7 @@ import AuthRoute from './components/PrivateRoute';
 
 // * Mock data
 import './mock/Reservation';
+import './mock/User';
 
 // export const history = createBrowserHistory({
 //   forceRefresh: true

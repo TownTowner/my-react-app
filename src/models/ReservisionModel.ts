@@ -1,6 +1,7 @@
 import { IUser } from "../services";
 
 interface Reservation {
+    id: number,
     createdTime: Date,
     guest: IUser,
     table: Table,
@@ -11,17 +12,11 @@ interface Table {
     size: number
 }
 enum ReservationStatus {
-    /// <summary>
-    /// 未处理
-    /// </summary>
+    /**未处理 */
     UnHandled = 0,
-    /// <summary>
-    /// 已完成
-    /// </summary>
+    /**已完成 */
     Completed = 1,
-    /// <summary>
-    /// 取消
-    /// </summary>
+    /**取消 */
     Canceled = 2
 }
 

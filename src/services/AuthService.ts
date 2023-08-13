@@ -1,4 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
+import axios, { AxiosResponse } from 'axios';
+import { AuthResponse } from '../models/ResponseModel';
 // import config from 'configData';
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
@@ -17,12 +19,12 @@ export enum UserType {
 }
 
 export interface IUser {
-    id: number,
-    token: string,
-    name: string,
-    code: string,
-    email: string,
-    userType: UserType
+    id?: number,
+    token?: string,
+    name?: string,
+    code?: string,
+    email?: string,
+    userType?: UserType
 }
 
 class AuthService {
@@ -39,19 +41,15 @@ class AuthService {
             body: JSON.stringify({ email, password })
         };
 
-        return Promise.resolve(new Response(JSON.stringify({ email: 'fff', token: 'fff' }), {
-            status: 200,
-            headers: {
-                "Content-Type": "application/json; utf-8",
-            },
-        }))
-            // ?old return fetch(`${(config as any).apiUrl}/Account/Login`, requestOptions)
-            // return fetch(`${SERVER_URL}/Account/Login`, requestOptions)
-            .then((res) => this.handleResponse(res))
+        // ?old return fetch(`${(config as any).apiUrl}/Account/Login`, requestOptions)
+        // return fetch(`${SERVER_URL}/Account/Login`, requestOptions)//fetch
+        return axios(`${SERVER_URL}/Account/Login`, requestOptions)
+            // .then((res) => this.handleResponse(res)) //fetch handl
+            .then((res) => this.handleResponseAxios(res))
             .then((user: IUser) => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('currentUser', JSON.stringify(user));
-                currentUserSubject.next(user);
+                currentUserSubject.next({ token: user.token });
                 return user;
             });
     }
@@ -67,10 +65,12 @@ class AuthService {
         };
 
         // return fetch(`${(config as any).apiUrl}/Account/Register`, requestOptions)
-        return fetch(`${SERVER_URL}/Account/Register`, requestOptions)
-            .then((res) => this.handleResponse(res))
+        // return fetch(`${SERVER_URL}/Account/Register`, requestOptions)
+        return axios(`${SERVER_URL}/Account/Register`, requestOptions)
+            //.then((res)=>this.handleResponse(res))//fetch handle
+            .then(res => this.handleResponseAxios(res))// axios handle
             .then(user => {
-                currentUserSubject.next(user);
+                currentUserSubject.next({ token: user.token });
                 return user;
             });
     }
@@ -89,6 +89,21 @@ class AuthService {
         } else {
             return {};
         }
+    }
+
+    handleResponseAxios(response: AxiosResponse<any, any>): Promise<AuthResponse> {
+        if (response.status !== 200) {
+            if ([401, 403].indexOf(response.status) !== -1) {
+                // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
+                this.logout();
+                window.location.reload();
+            }
+
+            const error = response.request?.responseText || response.statusText;
+            return Promise.reject({ success: false, message: 'error', errors: [error] });
+        }
+
+        return Promise.resolve(response.data);
     }
 
     handleResponse(response: any) {

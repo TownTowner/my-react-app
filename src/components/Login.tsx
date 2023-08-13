@@ -43,7 +43,7 @@ class LoginPage extends React.Component<{ router: { location, navigate, params }
                     //     console.log('dididi');
                     // });
                 } else {
-                    this.setState({ msg: 'Regist successful! Please Login now.' });
+                    this.setState({ msg: 'Register successful! Please Login now.' });
                     setTimeout(() => {
                         this.setState({ msg: null });
                     }, 3000);

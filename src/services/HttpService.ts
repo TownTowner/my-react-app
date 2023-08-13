@@ -1,4 +1,6 @@
+import axios, { AxiosResponse } from "axios";
 import { authServiceInstance } from "./AuthService";
+import { CommonResponse } from "../models/ResponseModel";
 
 class HttpService {
 
@@ -20,7 +22,25 @@ class HttpService {
             })
         }, header);
 
-        return fetch(url, requestOptions).then((res) => this.handleResponse(res));
+        return axios(url, requestOptions)
+            // .then((res) => this.handleResponse(res))//fetch
+            .then((res) => this.handleResponseAxios(res))//axios
+            ;
+    }
+
+    handleResponseAxios(response: AxiosResponse<any, any>): Promise<CommonResponse> {
+        if (response.status !== 200) {
+            if ([401, 403].indexOf(response.status) !== -1) {
+                // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
+                authServiceInstance.logout();
+                window.location.reload();
+            }
+
+            const error = response.request?.responseText || response.statusText;
+            return Promise.reject(error);
+        }
+
+        return Promise.resolve(response.data);
     }
 
     handleResponse(response: any) {
@@ -40,6 +60,7 @@ class HttpService {
             return data;
         });
     }
+
 }
 
 export { HttpService };
