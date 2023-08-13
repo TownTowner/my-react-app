@@ -13,6 +13,8 @@ import { HotelBar, LoginPage, PrivateRoute, ReservationPage } from './components
 import { createBrowserHistory } from 'history';
 import AuthRoute from './components/PrivateRoute';
 
+// * Mock data
+import './mock/Reservation';
 
 // export const history = createBrowserHistory({
 //   forceRefresh: true

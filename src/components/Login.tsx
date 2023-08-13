@@ -3,7 +3,7 @@ import React, { FormEvent } from 'react';
 import { authServiceInstance } from '../services';
 import { Link } from 'react-router-dom';
 import { TextField, Stack, Button, Alert } from '@mui/material';
-import withRouter from '../services/withRouter';
+import withRouter from '../utils/withRouter';
 
 interface ILoginState {
     email?: string;
