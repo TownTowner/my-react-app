@@ -1,16 +1,14 @@
 import React from 'react';
 import './App.css';
-// ?: you should ensure that ths history stack are the same with react using when you want use HistoryRouter
-// ?now we use useNavigate
+// ?: you should ensure that ths history stack are the same with react using when you want use [unstable_HistoryRouter as HistoryRouter]
 import {
-  Route, Router, Routes,
-  useNavigate, BrowserRouter,
-  unstable_HistoryRouter as HistoryRouter
+  Route, Routes,
+  BrowserRouter
 } from 'react-router-dom';
 import { authServiceInstance } from './services';
-import { HotelBar, LoginPage, PrivateRoute, ReservationPage } from './components';
+import { HotelBar, LoginPage, ReservationPage } from './components';
 
-import { createBrowserHistory } from 'history';
+// import { createBrowserHistory } from 'history';
 import AuthRoute from './components/PrivateRoute';
 
 // * Mock data

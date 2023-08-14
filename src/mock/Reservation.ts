@@ -10,6 +10,12 @@ export default Mock.mock(/api\/User\/Reservations/, 'get', (options) => {
         table: { size: 4, name: 'table1' },
         reservationTime: addDaysToDate(now, 2),
         reservationStatus: ReservationStatus.UnHandled
+    }, {
+        id: 2,
+        createdTime: addDaysToDate(now, -1), guest: { name: 'admin1', id: 2 },
+        table: { size: 4, name: 'table2' },
+        reservationTime: addDaysToDate(now, 1),
+        reservationStatus: ReservationStatus.UnHandled
     }]);
     return { success: true, message: 'success', data: ret };
 });

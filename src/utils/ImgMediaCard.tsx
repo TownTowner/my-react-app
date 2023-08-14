@@ -5,30 +5,33 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import img from '../assets/imgs/table.jpg';
+import { Reservation } from '../models/ReservisionModel';
+import { format } from 'date-fns';
 
-export default function ImgMediaCard() {
+export default function ImgMediaCard({ reservation }: { reservation: Reservation }) {
+  console.log(reservation);
   return (
-    <Card sx={{ maxWidth: 345 }} >
+    <Card sx={{ maxWidth: 345, marginTop: 2 }}>
       <CardMedia
         component="img"
-        alt="green iguana"
+        alt={"Table " + (reservation.table?.size || 1)}
         height="140"
-        image="/imgs/table.jpg"
+        image={`/imgs/table${reservation.table?.size || 1}.jpg`}
       />
       <CardContent>
         {/* <img src={img} alt=''/> */}
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          {reservation.guest?.name || 'Guest'}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          This guest had made an appointment
+          on {format(new Date(reservation.reservationTime), 'dd/MM/yyyy HH:mm')}
+          at {format(new Date(reservation.createdTime), 'dd/MM/yyyy HH:mm')}.
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <Button size="small">OK</Button>
+        <Button size="small">Cancel</Button>
       </CardActions>
     </Card>
   );
