@@ -1,5 +1,4 @@
-import { AxiosResponse } from "axios";
-import axios from './Axios';
+import axios, { AxiosResponse } from "axios";
 import { authServiceInstance } from "./AuthService";
 import { CommonResponse } from "../models/ResponseModel";
 
