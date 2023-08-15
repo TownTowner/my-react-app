@@ -6,9 +6,6 @@ on:
     - master
   workflow_dispatch:
 
-permissions: 
-  contents: read 
-  
 jobs:
   test_job:
     name: test to staging
@@ -16,7 +13,7 @@ jobs:
 
     steps:
       - name: checkout
-        uses: action/checkout@v3.5.3
+        uses: action/checkout@v2
 
       - name: Setup Node
         uses: actions/setup-node@v3.8.0
