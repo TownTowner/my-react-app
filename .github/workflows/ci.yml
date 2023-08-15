@@ -16,32 +16,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(github) }}
-        run: echo "$STEPS_CONTEXT"
+    #  - name: Dump steps context
+    #    env:
+    #      STEPS_CONTEXT: ${{ toJson(github) }}
+    #    run: echo "$STEPS_CONTEXT"
       
-      #- name: checkout code
-       # uses: action/checkout@v3
+      - name: checkout code
+        uses: action/checkout@v3
         #with:
          #ssh-strict: true
          #ssh-key: ***
 
-      - name: Setup Node
-        uses: actions/setup-node@v3.8.0
-        with: 
-          node-version: '16.x'
+     # - name: Setup Node
+     #   uses: actions/setup-node@v3.8.0
+    #    with: 
+     #     node-version: '16.x'
 
-      - name: npm install, build and test
-        run: |
-          npm install
-          npm run build --if-present
-          npm test
+    #  - name: npm install, build and test
+     #   run: |
+     #     npm install
+     #     npm run build --if-present
+     #     npm test
 
-      - name: Coveralls GitHub Action
+      #- name: Coveralls GitHub Action
         # You may pin to the exact commit or the version.
-        uses: coverallsapp/github-action@v2.2.1
-        with:
+       # uses: coverallsapp/github-action@v2.2.1
+      #  with:
           # Put secrets.GITHUB_TOKEN here
-          github-token: ${{github.ReadRepo}}# optional, default is ${{ github.token }}
+        #  github-token: ${{github.ReadRepo}}# optional, default is ${{ github.token }}
+
 
