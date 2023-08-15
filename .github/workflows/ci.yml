@@ -16,14 +16,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-          
       - name: Dump steps context
         env:
           STEPS_CONTEXT: ${{ toJson(github) }}
         run: echo "$STEPS_CONTEXT"
       
-      - name: checkout code
-        uses: action/checkout@v3
+      #- name: checkout code
+       # uses: action/checkout@v3
         #with:
          #ssh-strict: true
          #ssh-key: ***
