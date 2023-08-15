@@ -6,14 +6,21 @@ on:
     - master
   workflow_dispatch:
 
+permissions:
+  contents: read
+  packages: read
+      
 jobs:
   test_job:
     name: test to staging
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout
-        uses: action/checkout@v2
+      - name: checkout code
+        uses: action/checkout@v3
+        #with:
+         #ssh-strict: true
+         #ssh-key: ***
 
       - name: Setup Node
         uses: actions/setup-node@v3.8.0
