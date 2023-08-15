@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: checkout
-        uses: action/checkout@master
+        uses: action/checkout@v3.5.3
 
       - name: Setup Node
         uses: actions/setup-node@v3.8.0
@@ -32,25 +32,3 @@ jobs:
         with:
           # Put secrets.GITHUB_TOKEN here
           github-token: ${{github.ReadRepo}}# optional, default is ${{ github.token }}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
