@@ -5,10 +5,10 @@ on:
     branches:
     - master
   workflow_dispatch:
-
-permissions:
-  contents: write
-  packages: write
+permissions: read-all
+#permissions:
+#  contents: write
+#  packages: write
       
 jobs:
   test_job:
