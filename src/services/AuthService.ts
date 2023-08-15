@@ -1,5 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
+import axios from './Axios';
 import { AuthResponse } from '../models/ResponseModel';
 // import config from 'configData';
 
