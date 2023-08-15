@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  test_job:
+    name: test to staging
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: checkout
+        uses: action/checkout@v3.5.3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3.8.0
+        with: 
+          node-version: '16.x'
+
+      - name: npm install, build and test
+        run: |
+          npm install
+          npm run build --if-present
+          npm test
+
+      - name: Coveralls GitHub Action
+        # You may pin to the exact commit or the version.
+        uses: coverallsapp/github-action@v2.2.1
+        with:
+          # Put secrets.GITHUB_TOKEN here
+          github-token: ${{github.ReadRepo}}# optional, default is ${{ github.token }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
