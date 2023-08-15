@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   packages: write
       
 jobs:
@@ -16,6 +16,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+          
+      - name: Dump steps context
+        env:
+          STEPS_CONTEXT: ${{ toJson(github) }}
+        run: echo "$STEPS_CONTEXT"
+      
       - name: checkout code
         uses: action/checkout@v3
         #with:
@@ -39,3 +45,4 @@ jobs:
         with:
           # Put secrets.GITHUB_TOKEN here
           github-token: ${{github.ReadRepo}}# optional, default is ${{ github.token }}
+
