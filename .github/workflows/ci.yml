@@ -14,6 +14,10 @@ jobs:
   test_job:
     name: test to staging
     runs-on: ubuntu-latest
+    permissions:
+      deployments: write
+      contents: read
+      actions: read
 
     steps:
     #  - name: Dump steps context
