@@ -5,6 +5,7 @@
 |--------- |------------- |---------|
 | AppVeyor |  Linux |[![Build status](https://ci.appveyor.com/api/projects/status/pml2fotjto3rresd?svg=true)](https://ci.appveyor.com/project/TownTowner/my-react-app2)
 | Coveralls |  Linux |[![Coverage Status](https://coveralls.io/repos/github/TownTowner/my-react-app/badge.svg?branch=master)](https://coveralls.io/github/TownTowner/my-react-app?branch=master)
+| SonarCloud | Linux |[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=TownTowner_my-react-app&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=TownTowner_my-react-app)
 
 # Getting Started with Create React App
 
