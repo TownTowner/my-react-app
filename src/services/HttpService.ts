@@ -4,6 +4,20 @@ import { CommonResponse } from "../models/ResponseModel";
 
 class HttpService {
 
+    constructor() {
+        axios.interceptors.request.use(config => {
+            let auth = authServiceInstance.authHeader().Authorization;
+            if (auth)
+                config.headers.Authorization = auth;
+            return config;
+        });
+        axios.interceptors.response.use(response => {
+            return response;
+        }, error => {
+            return Promise.reject(error);
+        });
+    }
+
     post(url: string, header?: any): Promise<any> {
         return this.hfetch(url, 'POST', header);
     }
@@ -13,10 +27,9 @@ class HttpService {
     }
 
     hfetch(url: string, method: string, header?: any): Promise<any> {
-        let authHeader = authServiceInstance.authHeader();
         let requestOptions = Object.assign({
             method: method,
-            headers: Object.assign(authHeader, {
+            headers: Object.assign({}, {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json,text/plain,*/*'
             })
